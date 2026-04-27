@@ -174,9 +174,45 @@
 
     </div>
     </div>
-    <div class="footer">
-        &copy @ copyright 2026
+    <footer class="bg-dark text-light pt-4 pb-2 mt-5">
+  <div class="container">
+    <div class="row">
+
+      <!-- About -->
+      <div class="col-md-4 mb-3">
+        <h5 class="text-uppercase">ecommerce</h5>
+        <p>
+          buying and selling of goods online
+        </p>
+      </div>
+
+      <!-- Links -->
+      <div class="col-md-4 mb-3">
+        <h5 class="text-uppercase">Quick Links</h5>
+        <ul class="list-unstyled">
+          <li><a href="#" class="text-light text-decoration-none">Home</a></li>
+          <li><a href="#" class="text-light text-decoration-none">Dashboard</a></li>
+          <li><a href="#" class="text-light text-decoration-none">About</a></li>
+          <li><a href="#" class="text-light text-decoration-none">Contact</a></li>
+        </ul>
+      </div>
+
+      <!-- Contact -->
+      <div class="col-md-4 mb-3">
+        <h5 class="text-uppercase">Contact</h5>
+        <p>Email: support@ecommerce.com</p>
+        <p>Phone: +977-9800000000</p>
+      </div>
+
     </div>
+
+    <hr class="bg-light">
+
+    <div class="text-center">
+      <p class="mb-0">&copy; 2026 e-commerce. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
