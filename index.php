@@ -158,23 +158,37 @@
             <div class="modal-dialog">
 
                 <div class="modal-content">
+<div class="modal-header">
+    <h5 class="modal-title">Item</h5>
+    <button class="btn-close" data-bs-dismiss="modal"></button>
+</div>
 
-                    <div class="modal-header">
-                        <h5 class="modal-title">My Modal</h5>
-                        <button class="btn-close" data-bs-dismiss="modal"></button>
-                    </div>
-                    
-                    <div class="modal-body">
-                        hii
-                    </div>
-                </div>
+<div class="modal-body bg-secondary">
+    
+    <div class="d-flex gap-3 align-items-start">
+        
+        <!-- Left: Image -->
+        <div class="w-50">
+            <img src="https://picsum.photos/1200/400?random=14" class="img-fluid rounded h-90">
+        </div>
+
+        <!-- Right: Details -->
+        <div class="w-50 text-white">
+            <p><strong>Price:</strong> $100</p>
+            <p><strong>Available</strong></p>
+            <button class="btn btn-warning">Add to Cart</button>
+        </div>
+
+    </div>
+
+</div>
             </div>
         </div>
             
 
     </div>
     </div>
-    <footer class="bg-dark text-light pt-4 pb-2 mt-5">
+    <footer class="bg-secondary text-light pt-4 pb-2 mt-5">
   <div class="container">
     <div class="row">
 
