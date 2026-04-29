@@ -153,39 +153,78 @@
         </div>
 
         <!-- modal -->
-         <div class="modal fade" id="myModal">
+         <d<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
 
-            <div class="modal-dialog">
+      <!-- Header -->
+      <div class="modal-header">
+        <h5 class="modal-title">Premium Sneakers</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
 
-                <div class="modal-content">
-<div class="modal-header">
-    <h5 class="modal-title">Item</h5>
-    <button class="btn-close" data-bs-dismiss="modal"></button>
-</div>
+      <!-- Body -->
+      <div class="modal-body bg-light">
 
-<div class="modal-body bg-secondary">
-    
-    <div class="d-flex gap-3 align-items-start">
-        
-        <!-- Left: Image -->
-        <div class="w-50">
-            <img src="https://picsum.photos/1200/400?random=14" class="img-fluid rounded h-90">
+        <div class="row">
+
+          <!-- Left: Image -->
+          <div class="col-md-6 text-center">
+            <img src="https://picsum.photos/500/400?random=14" 
+                 class="img-fluid rounded shadow-sm">
+          </div>
+
+          <!-- Right: Details -->
+          <div class="col-md-6">
+
+            <h4 class="text-dark">$100</h4>
+            <p class="text-success fw-bold">In Stock ✔</p>
+
+            <!-- Rating -->
+            <p class="text-warning">
+              ⭐⭐⭐⭐☆ (4.0)
+            </p>
+
+            <!-- Description -->
+            <p class="text-muted">
+              Comfortable and stylish sneakers perfect for daily wear.
+              Lightweight design with premium material.
+            </p>
+
+            <!-- Size -->
+            <label class="fw-bold">Select Size:</label>
+            <select class="form-select mb-3">
+              <option>7</option>
+              <option>8</option>
+              <option>9</option>
+              <option>10</option>
+            </select>
+
+            <!-- Quantity -->
+            <label class="fw-bold">Quantity:</label>
+            <input type="number" class="form-control mb-3" value="1" min="1">
+
+            <!-- Buttons -->
+            <div class="d-flex gap-2">
+              <button class="btn btn-warning w-50">Add to Cart</button>
+              <button class="btn btn-dark w-50">Buy Now</button>
+            </div>
+
+          </div>
+
         </div>
 
-        <!-- Right: Details -->
-        <div class="w-50 text-white">
-            <p><strong>Price:</strong> $100</p>
-            <p><strong>Available</strong></p>
-            <button class="btn btn-warning">Add to Cart</button>
-        </div>
+      </div>
+
+      <!-- Footer -->
+      <div class="modal-footer">
+        <button class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
 
     </div>
-
+  </div>
 </div>
-            </div>
-        </div>
-            
-
     </div>
     </div>
     <footer class="bg-secondary text-light pt-4 pb-2 mt-5">
