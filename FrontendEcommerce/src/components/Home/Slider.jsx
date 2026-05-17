@@ -63,6 +63,7 @@ function Slider() {
             style={{
               background: slide.accent,
               color: "#fff",
+              textDecoration: "none",
             }}
           >
             {slide.cta} →

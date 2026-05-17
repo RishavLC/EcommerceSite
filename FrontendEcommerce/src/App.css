@@ -21,7 +21,7 @@
   .logo { font-family: 'Syne', sans-serif; font-size: 22px; font-weight: 800; letter-spacing: -0.5px; }
   .logo span { color: var(--accent); }
   .nav { display: flex; gap: 20px; margin-left: 32px; }
-  .nav a { font-size: 14px; font-weight: 500; color: #94a3b8; transition: color .2s; }
+  .nav a { font-size: 14px; font-weight: 500; color: #94a3b8; transition: color .2s; text-decoration: none;}
   .nav a:hover { color: #fff; }
   .header-right { margin-left: auto; display: flex; align-items: center; gap: 12px; }
   .search-bar { background: #1e293b; border: 1px solid #334155; color: #fff; border-radius: 8px; padding: 7px 14px; font-size: 13px; width: 200px; font-family: inherit; }
@@ -177,4 +177,13 @@
     .cards-grid { grid-template-columns: repeat(auto-fill,minmax(160px,1fr)); }
     .search-bar { width: 130px; }
     .cart-drawer { width: 100vw; }
+  }
+  .category{
+    background-color: rgba(0,0,0,0.3);
+    color: #94a3b8;
+    border-radius: 5px;
+  }
+  .category-opt{
+    background-color: #f8fafc;
+    color: #64748b;
   }

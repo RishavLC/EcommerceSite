@@ -1,17 +1,16 @@
 import { useState } from "react";
 
 import Header from "../components/Header";
-import Slider from "../components/Slider";
-import CardsGrid from "../components/CardsGrid";
-import Modal from "../components/Modal";
-import CartDrawer from "../components/CartDrawer";
+import Slider from "../components/Home/Slider";
+import CardsGrid from "../components/Home/CardsGrid";
+import Modal from "../components/Home/Modal";
+import CartDrawer from "../components/Home/CartDrawer";
 import Footer from "../components/Footer";
 
-import ServiceHighlights from "../components/ServiceHighlights";
-import CategorySection from "../components/CategorySection";
-import PromoBanner from "../components/PromoBanner";
-import Testimonials from "../components/Testimonials";
-import Newsletter from "../components/Newsletter";
+import ServiceHighlights from "../components/Home/ServiceHighlights";
+import PromoBanner from "../components/Home/PromoBanner";
+import Testimonials from "../components/Home/Testimonials";
+import Newsletter from "../components/Home/Newsletter";
 import BackToTop from "../components/BackToTop";
 
 function Home() {
@@ -68,8 +67,6 @@ function Home() {
       <Slider />
 
       <ServiceHighlights />
-
-      <CategorySection />
 
       <CardsGrid
         onView={setModalProduct}
