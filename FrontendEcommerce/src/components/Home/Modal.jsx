@@ -1,6 +1,12 @@
 function Modal({ product, onClose, onAddToCart, isAdded }) {
   if (!product) return null;
 
+  const price = Number(product.price);
+  const oldPrice = product.old_price ? Number(product.old_price) : null;
+  const rating = Number(product.rating || 0);
+  const reviews = product.reviews_count ?? product.reviews ?? 0;
+  const category = product.category?.name || product.category || "";
+
   return (
     <div
       className="modal-overlay"
@@ -60,38 +66,45 @@ function Modal({ product, onClose, onAddToCart, isAdded }) {
               letterSpacing: "1px",
             }}
           >
-            {product.category}
+            {category}
           </span>
 
           <h2 style={{ margin: 0 }}>{product.name}</h2>
 
           <div style={{ fontSize: "14px", color: "#64748b" }}>
-            ⭐ {product.rating} ({product.reviews} reviews)
+            ⭐ {rating} ({reviews} reviews)
           </div>
 
           <p style={{ fontSize: "14px", color: "#475569" }}>
-            Premium quality product designed for comfort, durability and modern style.
+            {product.description || "Premium quality product designed for comfort, durability and modern style."}
           </p>
 
           <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-            <h3 style={{ margin: 0 }}>${product.price}</h3>
+            <h3 style={{ margin: 0 }}>${price.toFixed(2)}</h3>
 
-            {product.oldPrice && (
+            {oldPrice && (
               <span
                 style={{
                   textDecoration: "line-through",
                   color: "#94a3b8",
                 }}
               >
-                ${product.oldPrice}
+                ${oldPrice.toFixed(2)}
               </span>
             )}
           </div>
+
+          {typeof product.stock === "number" && (
+            <div style={{ fontSize: 12, color: product.stock > 0 ? "#10b981" : "#ef4444" }}>
+              {product.stock > 0 ? `${product.stock} in stock` : "Out of stock"}
+            </div>
+          )}
 
           {/* BUTTONS */}
           <div style={{ display: "flex", gap: "10px", marginTop: "auto" }}>
             <button
               onClick={() => onAddToCart(product)}
+              disabled={product.stock === 0}
               style={{
                 flex: 1,
                 padding: "12px",
@@ -100,7 +113,8 @@ function Modal({ product, onClose, onAddToCart, isAdded }) {
                 background: isAdded ? "#10b981" : "#f97316",
                 color: "white",
                 fontWeight: "bold",
-                cursor: "pointer",
+                cursor: product.stock === 0 ? "not-allowed" : "pointer",
+                opacity: product.stock === 0 ? 0.6 : 1,
               }}
             >
               {isAdded ? "Added ✓" : "Add to Cart"}

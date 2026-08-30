@@ -1,108 +1,92 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 export default function Register() {
     const navigate = useNavigate();
+    const { register } = useAuth();
 
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [passwordConfirmation, setPasswordConfirmation] = useState("");
     const [message, setMessage] = useState("");
+    const [loading, setLoading] = useState(false);
 
-    const handleRegister = async () => {
+    const handleRegister = async (e) => {
+        e.preventDefault();
+        setLoading(true);
+        setMessage("");
         try {
-            const response = await fetch("http://127.0.0.1:8000/api/register", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Accept": "application/json"
-                },
-                body: JSON.stringify({
-                    name: name,
-                    email: email,
-                    password: password,
-                    password_confirmation: passwordConfirmation
-                })
-            });
-
-            const data = await response.json();
-
-            if (response.ok) {
-                // Save token and user in browser
-                localStorage.setItem("token", data.token);
-                localStorage.setItem("user", JSON.stringify(data.user));
-
-                setMessage("Registration successful!");
-
-                // Redirect to home page after 1 second
-                setTimeout(() => {
-                    navigate("/");
-                }, 1000);
-            } else {
-                // Show validation or server error
-                if (data.errors) {
-                    const firstError = Object.values(data.errors)[0][0];
-                    setMessage(firstError);
-                } else {
-                    setMessage(data.message || "Registration failed.");
-                }
-            }
-        } catch (error) {
-            console.error(error);
-            setMessage("Server error.");
+            await register(name, email, password, passwordConfirmation);
+            setMessage("Registration successful!");
+            setTimeout(() => navigate("/"), 500);
+        } catch (err) {
+            setMessage(err.message || "Registration failed.");
+        } finally {
+            setLoading(false);
         }
     };
 
     return (
-        <div>
+        <div style={{ maxWidth: 380, margin: "80px auto", padding: 24 }}>
             <h3>Register Here</h3>
 
-            <input
-                type="text"
-                placeholder="Full Name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-            />
+            <form onSubmit={handleRegister} style={{ display: "flex", flexDirection: "column", gap: 12, marginTop: 16 }}>
+                <input
+                    type="text"
+                    placeholder="Full Name"
+                    value={name}
+                    required
+                    onChange={(e) => setName(e.target.value)}
+                    style={inputStyle}
+                />
 
-            <br /><br />
+                <input
+                    type="email"
+                    placeholder="Email"
+                    value={email}
+                    required
+                    onChange={(e) => setEmail(e.target.value)}
+                    style={inputStyle}
+                />
 
-            <input
-                type="email"
-                placeholder="Email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-            />
+                <input
+                    type="password"
+                    placeholder="Password"
+                    value={password}
+                    required
+                    onChange={(e) => setPassword(e.target.value)}
+                    style={inputStyle}
+                />
 
-            <br /><br />
+                <input
+                    type="password"
+                    placeholder="Confirm Password"
+                    value={passwordConfirmation}
+                    required
+                    onChange={(e) => setPasswordConfirmation(e.target.value)}
+                    style={inputStyle}
+                />
 
-            <input
-                type="password"
-                placeholder="Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-            />
+                <button className="checkout-btn" disabled={loading} type="submit">
+                    {loading ? "Registering…" : "Register"}
+                </button>
+            </form>
 
-            <br /><br />
+            <p style={{ color: message === "Registration successful!" ? "#10b981" : "#ef4444" }}>{message}</p>
 
-            <input
-                type="password"
-                placeholder="Confirm Password"
-                value={passwordConfirmation}
-                onChange={(e) => setPasswordConfirmation(e.target.value)}
-            />
-
-            <br /><br />
-
-            <button onClick={handleRegister}>
-                Register
-            </button>
-
-            <p>{message}</p>
-
-            <p>
+            <p style={{ marginTop: 12 }}>
                 Already have an account? <Link to="/login">Login</Link>
             </p>
         </div>
     );
 }
+
+const inputStyle = {
+    padding: "10px 12px",
+    borderRadius: 8,
+    border: "1px solid var(--border)",
+    fontSize: 14,
+    fontFamily: "inherit",
+};

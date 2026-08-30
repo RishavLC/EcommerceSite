@@ -1,48 +1,22 @@
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import ProductCard from "./ProductCard";
+import api from "../../api/client";
 
-const PRODUCTS = [
-  {
-    id: 1,
-    name: "Nike Sneakers",
-    category: "Footwear",
-    price: 120,
-    oldPrice: 150,
-    rating: 5,
-    reviews: 120,
-    badge: "Top",
-    image: "👟",
-  },
-  {
-    id: 2,
-    name: "Smart Watch",
-    category: "Electronics",
-    price: 80,
-    oldPrice: 100,
-    rating: 4,
-    reviews: 95,
-    badge: "New",
-    image: "⌚",
-  },
-  {
-    id: 3,
-    name: "Headphones",
-    category: "Audio",
-    price: 60,
-    oldPrice: 90,
-    rating: 4,
-    reviews: 88,
-    badge: "",
-    image: "🎧",
-  },
-];
+function CardsGrid({ onView, onAddToCart, cartItems }) {
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
-function CardsGrid({
-  onView,
-  onAddToCart,
-  cartItems,
-}) {
-  const inCart = (id) =>
-    cartItems.some((i) => i.id === id);
+  useEffect(() => {
+    api
+      .get("/products?sort=rating&per_page=8", { auth: false })
+      .then((data) => setProducts(data.data || []))
+      .catch(() => setProducts([]))
+      .finally(() => setLoading(false));
+  }, []);
+
+  const inCart = (id) => cartItems.some((i) => i.id === id);
 
   return (
     <section className="section">
@@ -51,22 +25,26 @@ function CardsGrid({
           Featured <span>Products</span>
         </h2>
 
-        <button className="see-all">
+        <button className="see-all" onClick={() => navigate("/products")}>
           See All →
         </button>
       </div>
 
-      <div className="cards-grid">
-        {PRODUCTS.map((p) => (
-          <ProductCard
-            key={p.id}
-            product={p}
-            onView={onView}
-            onAddToCart={onAddToCart}
-            isAdded={inCart(p.id)}
-          />
-        ))}
-      </div>
+      {loading ? (
+        <p>Loading featured products…</p>
+      ) : (
+        <div className="cards-grid">
+          {products.map((p) => (
+            <ProductCard
+              key={p.id}
+              product={p}
+              onView={onView}
+              onAddToCart={onAddToCart}
+              isAdded={inCart(p.id)}
+            />
+          ))}
+        </div>
+      )}
     </section>
   );
 }

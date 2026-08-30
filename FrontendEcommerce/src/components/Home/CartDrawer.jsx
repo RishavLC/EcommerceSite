@@ -1,4 +1,4 @@
-function CartDrawer({ cartItems, onClose, onQtyChange, onRemove }) {
+function CartDrawer({ cartItems, onClose, onQtyChange, onRemove, onCheckout }) {
   const total = cartItems.reduce((s, i) => s + i.price * i.qty, 0);
   const itemCount = cartItems.reduce((s, i) => s + i.qty, 0);
 
@@ -57,7 +57,7 @@ function CartDrawer({ cartItems, onClose, onQtyChange, onRemove }) {
               <span>Total</span>
               <span>${(total >= 75 ? total : total + 5.99).toFixed(2)}</span>
             </div>
-            <button className="checkout-btn">Checkout →</button>
+            <button className="checkout-btn" onClick={onCheckout}>Checkout →</button>
           </div>
         )}
       </div>

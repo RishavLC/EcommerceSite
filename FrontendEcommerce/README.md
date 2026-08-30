@@ -14,11 +14,3 @@ The React Compiler is not enabled on this template because of its impact on dev 
 ## Expanding the ESLint configuration
 
 If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
-
-
-
-$env:CLAUDE_CONFIG_DIR = "$HOME\.claude-omniroute"
-$env:ANTHROPIC_BASE_URL = "http://localhost:20128"
-$env:ANTHROPIC_AUTH_TOKEN = "sk-c5f4393b36c56b8c-fbdf26-72a58fc3"
-$env:ANTHROPIC_API_KEY = ""
-$env:ANTHROPIC_MODEL = "free-stack"

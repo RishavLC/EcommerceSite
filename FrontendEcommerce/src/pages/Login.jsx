@@ -1,80 +1,77 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation, Link } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 export default function Login() {
     const navigate = useNavigate();
-    
+    const location = useLocation();
+    const { login } = useAuth();
+
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [message, setMessage] = useState("");
+    const [loading, setLoading] = useState(false);
 
-    const handleLogin = async () => {
+    const handleLogin = async (e) => {
+        e.preventDefault();
+        setLoading(true);
+        setMessage("");
         try {
-            const response = await fetch("http://127.0.0.1:8000/api/login", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Accept": "application/json"
-                },
-                body: JSON.stringify({
-                    email: email,
-                    password: password
-                })
-            });
-
-            const data = await response.json();
-
-            if (response.ok) {
-                // Save token in browser
-                localStorage.setItem("token", data.token);
-                localStorage.setItem("user", JSON.stringify(data.user));
-
-                setMessage("Login successful!");
-                setTimeout(() => {
-                    navigate("/");
-                }, 1000);
-
-                console.log("Token:", data.token);
-                console.log("User:", data.user);
-            } else {
-                setMessage(data.message || "Login failed.");
-                console.log(data);
-            }
-        } catch (error) {
-            console.error(error);
-            setMessage("Server error.");
+            const user = await login(email, password);
+            setMessage("Login successful!");
+            const dest = location.state?.from?.pathname || (user.role === "admin" ? "/admin" : "/");
+            setTimeout(() => navigate(dest, { replace: true }), 400);
+        } catch (err) {
+            setMessage(err.message || "Login failed.");
+        } finally {
+            setLoading(false);
         }
     };
 
     return (
-        <div>
+        <div style={{ maxWidth: 380, margin: "80px auto", padding: 24 }}>
             <h3>Login Here</h3>
 
-            <input
-                type="email"
-                placeholder="Email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-            />
+            <form onSubmit={handleLogin} style={{ display: "flex", flexDirection: "column", gap: 12, marginTop: 16 }}>
+                <input
+                    type="email"
+                    placeholder="Email"
+                    value={email}
+                    required
+                    onChange={(e) => setEmail(e.target.value)}
+                    style={inputStyle}
+                />
 
-            <br /><br />
+                <input
+                    type="password"
+                    placeholder="Password"
+                    value={password}
+                    required
+                    onChange={(e) => setPassword(e.target.value)}
+                    style={inputStyle}
+                />
 
-            <input
-                type="password"
-                placeholder="Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-            />
+                <button className="checkout-btn" disabled={loading} type="submit">
+                    {loading ? "Logging in…" : "Login"}
+                </button>
+            </form>
 
-            <br /><br />
-
-            <button onClick={handleLogin}>
-                Login
-            </button>
-            <p>
-                Don't have an account?<a href="/register">Register</a>
+            <p style={{ marginTop: 12 }}>
+                Don't have an account? <Link to="/register">Register</Link>
             </p>
-            <p>{message}</p>
+            <p style={{ color: message === "Login successful!" ? "#10b981" : "#ef4444" }}>{message}</p>
+            <p style={{ fontSize: 12, color: "var(--muted)", marginTop: 16 }}>
+                Demo admin: admin@shopnest.test / password<br />
+                Demo customer: test@example.com / password
+            </p>
         </div>
     );
 }
+
+const inputStyle = {
+    padding: "10px 12px",
+    borderRadius: 8,
+    border: "1px solid var(--border)",
+    fontSize: 14,
+    fontFamily: "inherit",
+};

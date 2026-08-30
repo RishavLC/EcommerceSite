@@ -1,67 +1,44 @@
 import Stars from "../Stars";
 
-function ProductCard({
-  product,
-  onView,
-  onAddToCart,
-  isAdded,
-}) {
+function ProductCard({ product, onView, onAddToCart, isAdded }) {
   const badgeClass =
-    product.badge === "New"
-      ? "new"
-      : product.badge === "Top"
-      ? "top"
-      : "";
+    product.badge === "New" ? "new" : product.badge === "Top" ? "top" : "";
+
+  const price = Number(product.price);
+  const oldPrice = product.old_price ? Number(product.old_price) : null;
+  const rating = Number(product.rating || 0);
+  const reviews = product.reviews_count ?? product.reviews ?? 0;
+  const category = product.category?.name || product.category || "";
 
   return (
     <div className="card">
-      <div
-        className="card-image"
-        onClick={() => onView(product)}
-      >
+      <div className="card-image" onClick={() => onView(product)}>
         {product.badge && (
-          <span className={`card-badge ${badgeClass}`}>
-            {product.badge}
-          </span>
+          <span className={`card-badge ${badgeClass}`}>{product.badge}</span>
         )}
-
         {product.image}
       </div>
 
       <div className="card-body">
-        <div className="card-category">
-          {product.category}
-        </div>
+        <div className="card-category">{category}</div>
 
-        <div
-          className="card-name"
-          onClick={() => {  console.log("CLICKED PRODUCT:", product);onView(product)}}
-        >
+        <div className="card-name" onClick={() => onView(product)}>
           {product.name}
         </div>
 
         <div className="card-rating">
-          <Stars rating={product.rating} />
-          <span>({product.reviews})</span>
+          <Stars rating={rating} />
+          <span>({reviews})</span>
         </div>
 
         <div className="card-footer">
           <div className="price-group">
-            <span className="price">
-              ${product.price}
-            </span>
-
-            {product.oldPrice && (
-              <span className="old-price">
-                ${product.oldPrice}
-              </span>
-            )}
+            <span className="price">${price.toFixed(2)}</span>
+            {oldPrice && <span className="old-price">${oldPrice.toFixed(2)}</span>}
           </div>
 
           <button
-            className={`add-btn ${
-              isAdded ? "added" : ""
-            }`}
+            className={`add-btn ${isAdded ? "added" : ""}`}
             onClick={() => onAddToCart(product)}
           >
             {isAdded ? "✓ Added" : "+ Cart"}
