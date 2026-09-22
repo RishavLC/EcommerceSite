@@ -1,5 +1,5 @@
 # ShopNest — Full-Stack E-Commerce (Laravel + React)
-
+this is how to run this system
 This was originally a skeleton project with only auth wired up (no products, cart,
 checkout, or orders). It's now a complete, working system:
 
