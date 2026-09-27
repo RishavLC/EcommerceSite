@@ -1,0 +1,20 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration {
+    public function up(): void {
+        // Free-form spec sheet rows (e.g. "Material" -> "Cotton"), distinct
+        // from product_variants which drive buyable options + stock.
+        Schema::create('product_attributes', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('product_id')->constrained()->cascadeOnDelete();
+            $table->string('name');
+            $table->string('value');
+            $table->timestamps();
+        });
+    }
+    public function down(): void { Schema::dropIfExists('product_attributes'); }
+};
