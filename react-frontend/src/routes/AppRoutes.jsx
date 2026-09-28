@@ -9,6 +9,9 @@ import ForgotPassword from '../pages/auth/ForgotPassword'
 import ResetPassword from '../pages/auth/ResetPassword'
 import Dashboard from '../pages/admin/Dashboard'
 import ComingSoon from '../pages/admin/ComingSoon'
+import Users from '../pages/admin/Users'
+import UserForm from '../pages/admin/UserForm'
+import UserDetail from '../pages/admin/UserDetail'
 
 export default function AppRoutes() {
   return (
@@ -32,7 +35,10 @@ export default function AppRoutes() {
         }
       >
         <Route index element={<Dashboard />} />
-        <Route path="users" element={<ComingSoon title="Users" phase="Phase 6" />} />
+        <Route path="users" element={<Users />} />
+        <Route path="users/new" element={<UserForm />} />
+        <Route path="users/:id" element={<UserDetail />} />
+        <Route path="users/:id/edit" element={<UserForm />} />
         <Route path="sellers" element={<ComingSoon title="Sellers" phase="Phase 7" />} />
         <Route path="categories" element={<ComingSoon title="Categories" phase="Phase 9" />} />
         <Route path="subcategories" element={<ComingSoon title="Subcategories" phase="Phase 9" />} />

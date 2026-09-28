@@ -47,6 +47,12 @@ its own sidebar shell instead of the storefront navbar/footer.
 
 Verified with a real `npm install && npm run build` - compiles clean.
 
+## Phase 6 — User Management
+
+`/admin/users` (searchable, filterable, paginated table with
+activate/deactivate), `/admin/users/new`, `/admin/users/:id/edit`, and
+`/admin/users/:id` (details + order history).
+
 ## Common errors & fixes
 
 | Error | Fix |

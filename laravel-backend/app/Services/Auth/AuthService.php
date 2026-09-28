@@ -39,7 +39,16 @@ class AuthService
 
         request()->session()->regenerate();
 
-        return Auth::user();
+        $user = Auth::user();
+
+        if ($user->status !== 'active') {
+            $this->logout();
+            throw ValidationException::withMessages([
+                'email' => ['Your account is '.$user->status.'. Please contact support.'],
+            ]);
+        }
+
+        return $user;
     }
 
     public function logout(): void

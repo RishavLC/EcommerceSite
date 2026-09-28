@@ -206,7 +206,23 @@ curl http://127.0.0.1:8000/api/v1/admin/dashboard/charts -b cookies.txt -H "Acce
 With no products/orders seeded yet, stats return zeros and chart arrays
 come back empty - that's expected until Phase 10/19 add real data.
 
-## What's next (Phase 6)
+## Phase 6 — Admin User Management
 
-- Admin user management: list/search/filter/create/edit users, change
-  roles, activate/deactivate, view order history
+Endpoints (all under `/api/v1/admin`, admin-only):
+`GET /users` (search, role, status, per_page, page), `POST /users`,
+`GET /users/{id}`, `PUT /users/{id}`, `POST /users/{id}/activate`,
+`POST /users/{id}/deactivate`, `GET /users/{id}/orders`.
+
+Rules enforced server-side: an admin cannot deactivate themselves or strip
+their own admin role; deactivating a user revokes their API tokens; login
+is refused for inactive/suspended accounts; a blank password on edit keeps
+the existing one. Logic lives in `UserService`, validation in
+`StoreUserRequest` / `UpdateUserRequest`.
+
+Note: an already-logged-in *cookie session* of a newly deactivated user
+stays valid until it expires (Sanctum SPA sessions are stateful). A
+per-request status check is a small middleware to add in Phase 30 (Security).
+
+## What's next (Phase 7)
+
+- Seller applications: apply, admin approve/reject/suspend/activate
