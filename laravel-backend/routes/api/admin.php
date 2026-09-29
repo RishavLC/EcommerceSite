@@ -1,8 +1,11 @@
 <?php
 
+use App\Http\Controllers\Api\Admin\BrandController;
+use App\Http\Controllers\Api\Admin\CategoryController;
 use App\Http\Controllers\Api\Admin\DashboardController;
 use App\Http\Controllers\Api\Admin\RoleController;
 use App\Http\Controllers\Api\Admin\SellerController;
+use App\Http\Controllers\Api\Admin\SubcategoryController;
 use App\Http\Controllers\Api\Admin\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -38,3 +41,27 @@ Route::post('/sellers/{seller}/approve', [SellerController::class, 'approve']);
 Route::post('/sellers/{seller}/reject', [SellerController::class, 'reject']);
 Route::post('/sellers/{seller}/suspend', [SellerController::class, 'suspend']);
 Route::post('/sellers/{seller}/activate', [SellerController::class, 'activate']);
+
+// Categories (Phase 9)
+Route::get('/categories', [CategoryController::class, 'index']);
+Route::post('/categories', [CategoryController::class, 'store']);
+Route::get('/categories/{category}', [CategoryController::class, 'show']);
+Route::put('/categories/{category}', [CategoryController::class, 'update']);
+Route::delete('/categories/{category}', [CategoryController::class, 'destroy']);
+Route::post('/categories/{category}/toggle-active', [CategoryController::class, 'toggleActive']);
+
+// Subcategories (Phase 9)
+Route::get('/subcategories', [SubcategoryController::class, 'index']);
+Route::post('/subcategories', [SubcategoryController::class, 'store']);
+Route::get('/subcategories/{subcategory}', [SubcategoryController::class, 'show']);
+Route::put('/subcategories/{subcategory}', [SubcategoryController::class, 'update']);
+Route::delete('/subcategories/{subcategory}', [SubcategoryController::class, 'destroy']);
+Route::post('/subcategories/{subcategory}/toggle-active', [SubcategoryController::class, 'toggleActive']);
+
+// Brands (Phase 9)
+Route::get('/brands', [BrandController::class, 'index']);
+Route::post('/brands', [BrandController::class, 'store']);
+Route::get('/brands/{brand}', [BrandController::class, 'show']);
+Route::put('/brands/{brand}', [BrandController::class, 'update']);
+Route::delete('/brands/{brand}', [BrandController::class, 'destroy']);
+Route::post('/brands/{brand}/toggle-active', [BrandController::class, 'toggleActive']);

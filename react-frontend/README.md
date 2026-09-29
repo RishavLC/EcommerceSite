@@ -74,6 +74,14 @@ rest are `ComingSoon` placeholders naming their phase, same pattern as
 admin. `StatCard` and `ComingSoon` were moved to `components/common/` so
 both admin and seller dashboards share one copy instead of two.
 
+## Phase 9 — Category, Subcategory & Brand Management
+
+`/admin/categories`, `/admin/subcategories` (with a category dropdown
+sourced from the categories list), and `/admin/brands` - each a
+searchable/filterable table with Edit, Activate/Deactivate, and Delete,
+plus a shared create/edit form page. Image/logo fields are plain URL text
+inputs for now; real file upload comes with Phase 10's product images.
+
 ## Common errors & fixes
 
 | Error | Fix |

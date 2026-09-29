@@ -272,6 +272,36 @@ curl http://127.0.0.1:8000/api/v1/seller/dashboard/stats -b seller_cookies.txt -
 curl http://127.0.0.1:8000/api/v1/seller/store-profile -b seller_cookies.txt -H "Accept: application/json"
 ```
 
-## What's next (Phase 9)
+## Phase 9 — Category, Subcategory & Brand Management
 
-- Category, Subcategory, and Brand management (admin CRUD)
+Full CRUD for all three, all admin-only, all under `/api/v1/admin`:
+`GET/POST /categories`, `GET/PUT/DELETE /categories/{id}`,
+`POST /categories/{id}/toggle-active` - and the identical shape for
+`/subcategories` (plus a `category_id` filter on the list) and `/brands`.
+
+A few deliberate choices:
+- One `CategoryRequest`/`SubcategoryRequest`/`BrandRequest` per resource
+  handles both create and update (`$this->isMethod('POST')` switches
+  required vs sometimes), instead of a separate Store/Update pair like
+  Phase 6 - there's no case here where create and update rules diverge,
+  so one file is less to keep in sync.
+- A single `POST .../toggle-active` replaces separate activate/deactivate
+  endpoints from earlier phases - flipping a boolean doesn't need two
+  routes.
+- Categories/Subcategories use `SoftDeletes` (Phase 4), so `destroy()` is
+  a safe soft delete even once products reference them (Phase 10 sets
+  `category_id` to `restrictOnDelete`, which only matters for hard
+  deletes). Brands have no `SoftDeletes` column, so `destroy()` is a real
+  hard delete - safe because `products.brand_id` is `nullOnDelete`.
+
+```bash
+curl http://127.0.0.1:8000/api/v1/admin/categories -b admin_cookies.txt -H "Accept: application/json"
+curl -X POST http://127.0.0.1:8000/api/v1/admin/categories -b admin_cookies.txt \
+  -H "Content-Type: application/json" -H "Accept: application/json" \
+  -d '{"name":"Electronics"}'
+```
+
+## What's next (Phase 10)
+
+- Seller product management: create/edit products with images, variants,
+  and attributes; admin moderation if enabled

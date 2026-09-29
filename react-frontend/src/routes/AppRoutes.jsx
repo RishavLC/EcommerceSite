@@ -16,6 +16,12 @@ import UserForm from '../pages/admin/UserForm'
 import UserDetail from '../pages/admin/UserDetail'
 import Sellers from '../pages/admin/Sellers'
 import SellerDetail from '../pages/admin/SellerDetail'
+import Categories from '../pages/admin/Categories'
+import CategoryForm from '../pages/admin/CategoryForm'
+import Subcategories from '../pages/admin/Subcategories'
+import SubcategoryForm from '../pages/admin/SubcategoryForm'
+import Brands from '../pages/admin/Brands'
+import BrandForm from '../pages/admin/BrandForm'
 import SellerDashboard from '../pages/seller/Dashboard'
 import SellerStoreProfile from '../pages/seller/StoreProfile'
 
@@ -55,9 +61,15 @@ export default function AppRoutes() {
         <Route path="users/:id/edit" element={<UserForm />} />
         <Route path="sellers" element={<Sellers />} />
         <Route path="sellers/:id" element={<SellerDetail />} />
-        <Route path="categories" element={<ComingSoon title="Categories" phase="Phase 9" />} />
-        <Route path="subcategories" element={<ComingSoon title="Subcategories" phase="Phase 9" />} />
-        <Route path="brands" element={<ComingSoon title="Brands" phase="Phase 9" />} />
+        <Route path="categories" element={<Categories />} />
+        <Route path="categories/new" element={<CategoryForm />} />
+        <Route path="categories/:id/edit" element={<CategoryForm />} />
+        <Route path="subcategories" element={<Subcategories />} />
+        <Route path="subcategories/new" element={<SubcategoryForm />} />
+        <Route path="subcategories/:id/edit" element={<SubcategoryForm />} />
+        <Route path="brands" element={<Brands />} />
+        <Route path="brands/new" element={<BrandForm />} />
+        <Route path="brands/:id/edit" element={<BrandForm />} />
         <Route path="products" element={<ComingSoon title="Products" phase="Phase 10" />} />
         <Route path="orders" element={<ComingSoon title="Orders" phase="Phase 20" />} />
         <Route path="payments" element={<ComingSoon title="Payments" phase="Phase 21" />} />
