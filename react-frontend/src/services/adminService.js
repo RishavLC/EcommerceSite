@@ -1,5 +1,6 @@
 import api from './api'
 
+// ---- Dashboard (Phase 5) ----
 export async function fetchDashboardStats() {
   const { data } = await api.get('/api/v1/admin/dashboard/stats')
   return data.data
@@ -45,4 +46,35 @@ export async function setUserActive(id, active) {
 export async function fetchUserOrders(id) {
   const { data } = await api.get(`/api/v1/admin/users/${id}/orders`)
   return data
+}
+
+// ---- Sellers (Phase 7) ----
+export async function fetchSellers(params) {
+  const { data } = await api.get('/api/v1/admin/sellers', { params })
+  return data
+}
+
+export async function fetchSeller(id) {
+  const { data } = await api.get(`/api/v1/admin/sellers/${id}`)
+  return data.data
+}
+
+export async function approveSeller(id) {
+  const { data } = await api.post(`/api/v1/admin/sellers/${id}/approve`)
+  return data.data
+}
+
+export async function rejectSeller(id, reason) {
+  const { data } = await api.post(`/api/v1/admin/sellers/${id}/reject`, { rejection_reason: reason })
+  return data.data
+}
+
+export async function suspendSeller(id) {
+  const { data } = await api.post(`/api/v1/admin/sellers/${id}/suspend`)
+  return data.data
+}
+
+export async function activateSeller(id) {
+  const { data } = await api.post(`/api/v1/admin/sellers/${id}/activate`)
+  return data.data
 }

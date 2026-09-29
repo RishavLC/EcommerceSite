@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\Buyer\SellerApplicationController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -12,3 +13,7 @@ use Illuminate\Support\Facades\Route;
 | reviews, support tickets, etc. get added here from Phase 16+.
 |
 */
+
+// Phase 7: any authenticated user (buyer) can apply to become a seller.
+Route::post('/seller-application', [SellerApplicationController::class, 'store']);
+Route::get('/seller-application', [SellerApplicationController::class, 'show']);

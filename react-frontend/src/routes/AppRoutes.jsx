@@ -7,11 +7,14 @@ import Login from '../pages/auth/Login'
 import Register from '../pages/auth/Register'
 import ForgotPassword from '../pages/auth/ForgotPassword'
 import ResetPassword from '../pages/auth/ResetPassword'
+import SellerApply from '../pages/seller/Apply'
 import Dashboard from '../pages/admin/Dashboard'
 import ComingSoon from '../pages/admin/ComingSoon'
 import Users from '../pages/admin/Users'
 import UserForm from '../pages/admin/UserForm'
 import UserDetail from '../pages/admin/UserDetail'
+import Sellers from '../pages/admin/Sellers'
+import SellerDetail from '../pages/admin/SellerDetail'
 
 export default function AppRoutes() {
   return (
@@ -23,6 +26,14 @@ export default function AppRoutes() {
         <Route path="/register" element={<Register />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password" element={<ResetPassword />} />
+        <Route
+          path="/become-a-seller"
+          element={
+            <ProtectedRoute>
+              <SellerApply />
+            </ProtectedRoute>
+          }
+        />
       </Route>
 
       {/* Admin */}
@@ -39,7 +50,8 @@ export default function AppRoutes() {
         <Route path="users/new" element={<UserForm />} />
         <Route path="users/:id" element={<UserDetail />} />
         <Route path="users/:id/edit" element={<UserForm />} />
-        <Route path="sellers" element={<ComingSoon title="Sellers" phase="Phase 7" />} />
+        <Route path="sellers" element={<Sellers />} />
+        <Route path="sellers/:id" element={<SellerDetail />} />
         <Route path="categories" element={<ComingSoon title="Categories" phase="Phase 9" />} />
         <Route path="subcategories" element={<ComingSoon title="Subcategories" phase="Phase 9" />} />
         <Route path="brands" element={<ComingSoon title="Brands" phase="Phase 9" />} />

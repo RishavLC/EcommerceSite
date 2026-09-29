@@ -16,7 +16,11 @@ export default function Navbar() {
         <Link to="/" className="text-lg font-bold text-slate-800">Marketplace</Link>
         <div className="flex items-center gap-4 text-sm text-slate-600">
           <Link to="/">Home</Link>
+          {isAuthenticated && !roles.includes('seller') && !roles.includes('admin') && (
+            <Link to="/become-a-seller">Become a Seller</Link>
+          )}
           {roles.includes('admin') && <Link to="/admin">Admin</Link>}
+          {isAuthenticated && !roles.includes('seller') && <Link to="/become-seller">Become a seller</Link>}
           {isAuthenticated ? (
             <>
               <span>Hi, {user.name}</span>

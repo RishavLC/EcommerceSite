@@ -53,6 +53,19 @@ Verified with a real `npm install && npm run build` - compiles clean.
 activate/deactivate), `/admin/users/new`, `/admin/users/:id/edit`, and
 `/admin/users/:id` (details + order history).
 
+## Phase 7 — Seller System
+
+`/become-a-seller` (any logged-in user, linked from the navbar unless
+they're already a seller/admin) shows the application form, or the current
+status + rejection reason if one exists, with a reapply option after
+rejection. Admin gets `/admin/sellers` (filterable list) and
+`/admin/sellers/:id` (full profile + approve/reject/suspend/activate
+actions, reject requires a reason).
+
+Note: approving a seller doesn't retroactively update that seller's own
+already-loaded session - they'll see their new role after their next
+`reloadUser()` call (e.g. next page load that hits `/me`).
+
 ## Common errors & fixes
 
 | Error | Fix |

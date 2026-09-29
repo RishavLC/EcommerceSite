@@ -223,6 +223,37 @@ Note: an already-logged-in *cookie session* of a newly deactivated user
 stays valid until it expires (Sanctum SPA sessions are stateful). A
 per-request status check is a small middleware to add in Phase 30 (Security).
 
-## What's next (Phase 7)
+## Phase 7 — Seller System
 
-- Seller applications: apply, admin approve/reject/suspend/activate
+Buyer side (any authenticated user): `POST /api/v1/buyer/seller-application`
+to apply, `GET /api/v1/buyer/seller-application` to check status. Reapplying
+is only allowed once the previous application was `rejected` - `pending`,
+`approved`, or `suspended` all return a 422.
+
+Admin side: `GET /api/v1/admin/sellers` (filter by `status`/`search`),
+`GET /sellers/{id}`, and `POST /sellers/{id}/{approve|reject|suspend|activate}`.
+Each action is only valid from a specific prior status (e.g. you can't
+suspend a `pending` application) - `SellerService::assertStatus()` enforces
+this and returns a 422 otherwise.
+
+Approving a seller does two things in one transaction-worthy step: sets
+`seller_profiles.status = approved` **and** attaches the `seller` role to
+the user - so `EnsureSellerIsApproved` (Phase 1) and `role:seller`
+(Phase 3) both start passing immediately, with no extra wiring needed since
+those middleware were already written defensively back in Phase 1.
+
+```bash
+# as a logged-in buyer
+curl -X POST http://127.0.0.1:8000/api/v1/buyer/seller-application -b cookies.txt \
+  -H "Content-Type: application/json" -H "Accept: application/json" \
+  -d '{"store_name":"Test Store","phone":"9800000000","address_line":"123 Main St","city":"Kathmandu","province":"Bagmati","bank_account_name":"Test Seller","bank_account_number":"0001","bank_name":"Test Bank"}'
+
+# as an admin
+curl http://127.0.0.1:8000/api/v1/admin/sellers -b admin_cookies.txt -H "Accept: application/json"
+curl -X POST http://127.0.0.1:8000/api/v1/admin/sellers/1/approve -b admin_cookies.txt -H "Accept: application/json"
+```
+
+## What's next (Phase 8)
+
+- Seller dashboard: stats + modules shell, same pattern as Phase 5/6 but
+  scoped to `seller_id = auth()->id()`
