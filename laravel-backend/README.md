@@ -253,7 +253,25 @@ curl http://127.0.0.1:8000/api/v1/admin/sellers -b admin_cookies.txt -H "Accept:
 curl -X POST http://127.0.0.1:8000/api/v1/admin/sellers/1/approve -b admin_cookies.txt -H "Accept: application/json"
 ```
 
-## What's next (Phase 8)
+## Phase 8 — Seller Dashboard
 
-- Seller dashboard: stats + modules shell, same pattern as Phase 5/6 but
-  scoped to `seller_id = auth()->id()`
+`GET /api/v1/seller/dashboard/stats` - the 9 numbers (total products,
+orders, sales, revenue, pending/completed orders, low-stock count, average
+rating, pending payouts), every query scoped to `seller_id = auth()->id()`
+via `DashboardService::stats(int $sellerId)`.
+
+`GET/PUT /api/v1/seller/store-profile` - a seller can view and edit their
+own profile. `store_name`/`store_slug` are deliberately NOT editable here -
+changing a slug after Phase 15 builds public `/store/{slug}` pages would
+break existing links, so a name/slug change is left as an admin-mediated
+action for a later phase.
+
+```bash
+# as an approved seller
+curl http://127.0.0.1:8000/api/v1/seller/dashboard/stats -b seller_cookies.txt -H "Accept: application/json"
+curl http://127.0.0.1:8000/api/v1/seller/store-profile -b seller_cookies.txt -H "Accept: application/json"
+```
+
+## What's next (Phase 9)
+
+- Category, Subcategory, and Brand management (admin CRUD)

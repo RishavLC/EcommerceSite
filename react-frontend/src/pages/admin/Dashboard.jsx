@@ -3,7 +3,7 @@ import {
   LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
 } from 'recharts'
 import { fetchDashboardStats, fetchDashboardCharts } from '../../services/adminService'
-import StatCard from '../../components/admin/StatCard'
+import StatCard from '../../components/common/StatCard'
 
 export default function Dashboard() {
   const [stats, setStats] = useState(null)

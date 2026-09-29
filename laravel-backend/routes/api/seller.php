@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Api\Seller\DashboardController;
+use App\Http\Controllers\Api\Seller\StoreProfileController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -8,7 +10,12 @@ use Illuminate\Support\Facades\Route;
 |--------------------------------------------------------------------------
 |
 | Sits behind auth:sanctum + role:seller + seller.approved
-| (see routes/api.php). Seller dashboard, product/inventory management,
-| orders, payouts, store settings, etc. get added here from Phase 8+.
+| (see routes/api.php). Product/inventory management, orders, payouts,
+| coupons, etc. get added here phase by phase.
 |
 */
+
+Route::get('/dashboard/stats', [DashboardController::class, 'stats']);
+
+Route::get('/store-profile', [StoreProfileController::class, 'show']);
+Route::put('/store-profile', [StoreProfileController::class, 'update']);

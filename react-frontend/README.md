@@ -66,6 +66,14 @@ Note: approving a seller doesn't retroactively update that seller's own
 already-loaded session - they'll see their new role after their next
 `reloadUser()` call (e.g. next page load that hits `/me`).
 
+## Phase 8 — Seller Dashboard
+
+`/seller` (protected, `allowedRoles={['seller']}`) with its own sidebar
+(`SellerLayout`, 11 modules). Dashboard and Store Profile are real; the
+rest are `ComingSoon` placeholders naming their phase, same pattern as
+admin. `StatCard` and `ComingSoon` were moved to `components/common/` so
+both admin and seller dashboards share one copy instead of two.
+
 ## Common errors & fixes
 
 | Error | Fix |

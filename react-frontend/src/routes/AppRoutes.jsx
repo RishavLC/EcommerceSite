@@ -1,20 +1,23 @@
 import { Routes, Route } from 'react-router-dom'
 import MainLayout from '../layouts/MainLayout'
 import AdminLayout from '../layouts/AdminLayout'
+import SellerLayout from '../layouts/SellerLayout'
 import ProtectedRoute from '../components/common/ProtectedRoute'
+import ComingSoon from '../components/common/ComingSoon'
 import Home from '../pages/Home'
 import Login from '../pages/auth/Login'
 import Register from '../pages/auth/Register'
 import ForgotPassword from '../pages/auth/ForgotPassword'
 import ResetPassword from '../pages/auth/ResetPassword'
 import SellerApply from '../pages/seller/Apply'
-import Dashboard from '../pages/admin/Dashboard'
-import ComingSoon from '../pages/admin/ComingSoon'
+import AdminDashboard from '../pages/admin/Dashboard'
 import Users from '../pages/admin/Users'
 import UserForm from '../pages/admin/UserForm'
 import UserDetail from '../pages/admin/UserDetail'
 import Sellers from '../pages/admin/Sellers'
 import SellerDetail from '../pages/admin/SellerDetail'
+import SellerDashboard from '../pages/seller/Dashboard'
+import SellerStoreProfile from '../pages/seller/StoreProfile'
 
 export default function AppRoutes() {
   return (
@@ -45,7 +48,7 @@ export default function AppRoutes() {
           </ProtectedRoute>
         }
       >
-        <Route index element={<Dashboard />} />
+        <Route index element={<AdminDashboard />} />
         <Route path="users" element={<Users />} />
         <Route path="users/new" element={<UserForm />} />
         <Route path="users/:id" element={<UserDetail />} />
@@ -67,7 +70,27 @@ export default function AppRoutes() {
         <Route path="settings" element={<ComingSoon title="Settings" phase="Phase 29" />} />
       </Route>
 
-      {/* Phase 8: /seller/* (wrapped in ProtectedRoute allowedRoles={['seller']}) */}
+      {/* Seller */}
+      <Route
+        path="/seller"
+        element={
+          <ProtectedRoute allowedRoles={['seller']}>
+            <SellerLayout />
+          </ProtectedRoute>
+        }
+      >
+        <Route index element={<SellerDashboard />} />
+        <Route path="products" element={<ComingSoon title="Products" phase="Phase 10" />} />
+        <Route path="inventory" element={<ComingSoon title="Inventory" phase="Phase 11" />} />
+        <Route path="orders" element={<ComingSoon title="Orders" phase="Phase 20" />} />
+        <Route path="customers" element={<ComingSoon title="Customers" phase="Phase 20" />} />
+        <Route path="reviews" element={<ComingSoon title="Reviews" phase="Phase 23" />} />
+        <Route path="coupons" element={<ComingSoon title="Coupons" phase="Phase 24" />} />
+        <Route path="earnings" element={<ComingSoon title="Earnings" phase="Phase 22" />} />
+        <Route path="payouts" element={<ComingSoon title="Payouts" phase="Phase 22" />} />
+        <Route path="store-profile" element={<SellerStoreProfile />} />
+        <Route path="store-settings" element={<ComingSoon title="Store Settings" phase="Phase 29" />} />
+      </Route>
     </Routes>
   )
 }

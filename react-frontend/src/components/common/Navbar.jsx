@@ -19,8 +19,8 @@ export default function Navbar() {
           {isAuthenticated && !roles.includes('seller') && !roles.includes('admin') && (
             <Link to="/become-a-seller">Become a Seller</Link>
           )}
+          {roles.includes('seller') && <Link to="/seller">Seller Dashboard</Link>}
           {roles.includes('admin') && <Link to="/admin">Admin</Link>}
-          {isAuthenticated && !roles.includes('seller') && <Link to="/become-seller">Become a seller</Link>}
           {isAuthenticated ? (
             <>
               <span>Hi, {user.name}</span>
