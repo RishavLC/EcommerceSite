@@ -301,7 +301,47 @@ curl -X POST http://127.0.0.1:8000/api/v1/admin/categories -b admin_cookies.txt 
   -d '{"name":"Electronics"}'
 ```
 
-## What's next (Phase 10)
+## Phase 10 — Product Management
 
-- Seller product management: create/edit products with images, variants,
-  and attributes; admin moderation if enabled
+Seller side, all under `/api/v1/seller/products`: `GET` (list, own
+products only), `POST` (create), `GET/PUT/DELETE /{id}`, plus
+`POST /{id}/images` and `DELETE /{id}/images/{imageId}` for managing
+images one at a time after creation. Create/update accept
+`multipart/form-data` since images are real file uploads; PUT is sent as
+a POST with `_method=PUT` (Laravel's standard way to get file uploads
+through a "PUT" - PHP doesn't parse multipart bodies on PUT natively).
+
+New in this phase: **`ProductPolicy`** (`app/Policies`) is the first real
+Policy in the app - `view`/`update`/`delete` check `seller_id === auth()->id()`
+(or admin for `view`). Laravel auto-discovers it by naming convention, no
+manual registration needed. Using it required adding
+`Illuminate\Foundation\Auth\Access\AuthorizesRequests` to the base
+`Controller` from Phase 1, which didn't have it - `$this->authorize()`
+would have been a fatal error otherwise. Caught this by actually reasoning
+through what the trait provides rather than assuming it, since our base
+Controller was hand-written, not Laravel's default one.
+
+**Moderation toggle:** `PRODUCT_MODERATION_ENABLED` in `.env` (default
+`true`). When on, new products start as `pending` and need admin approval
+(`POST /api/v1/admin/products/{id}/approve` or `/reject` with a reason)
+before buyers could ever see them in Phase 12+. When off, products go
+straight to `active`. Editing an already-approved product does **not**
+re-trigger moderation in this phase - noted as a gap, not a design
+decision, and worth tightening in Phase 30 (Security) if moderation
+matters to you.
+
+Variants and spec attributes are **full-replace on update**: sending a
+`variants`/`attributes` array in a `PUT` deletes and recreates all of that
+product's rows rather than diffing. Simpler, and safe since neither has
+order/stock history pointing at individual variant IDs yet.
+
+```bash
+curl -X POST http://127.0.0.1:8000/api/v1/seller/products -b seller_cookies.txt \
+  -F "name=Test Shirt" -F "category_id=1" -F "price=999" -F "stock=50" \
+  -F "images[]=@/path/to/photo.jpg"
+```
+
+## What's next (Phase 11)
+
+- Inventory: stock history, reserved/sold quantities, low-stock alerts,
+  automatic stock adjustment on order/cancel/return/refund

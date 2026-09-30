@@ -22,8 +22,12 @@ import Subcategories from '../pages/admin/Subcategories'
 import SubcategoryForm from '../pages/admin/SubcategoryForm'
 import Brands from '../pages/admin/Brands'
 import BrandForm from '../pages/admin/BrandForm'
+import AdminProducts from '../pages/admin/Products'
+import AdminProductDetail from '../pages/admin/ProductDetail'
 import SellerDashboard from '../pages/seller/Dashboard'
 import SellerStoreProfile from '../pages/seller/StoreProfile'
+import SellerProducts from '../pages/seller/Products'
+import SellerProductForm from '../pages/seller/ProductForm'
 
 export default function AppRoutes() {
   return (
@@ -70,7 +74,8 @@ export default function AppRoutes() {
         <Route path="brands" element={<Brands />} />
         <Route path="brands/new" element={<BrandForm />} />
         <Route path="brands/:id/edit" element={<BrandForm />} />
-        <Route path="products" element={<ComingSoon title="Products" phase="Phase 10" />} />
+        <Route path="products" element={<AdminProducts />} />
+        <Route path="products/:id" element={<AdminProductDetail />} />
         <Route path="orders" element={<ComingSoon title="Orders" phase="Phase 20" />} />
         <Route path="payments" element={<ComingSoon title="Payments" phase="Phase 21" />} />
         <Route path="coupons" element={<ComingSoon title="Coupons" phase="Phase 24" />} />
@@ -92,7 +97,9 @@ export default function AppRoutes() {
         }
       >
         <Route index element={<SellerDashboard />} />
-        <Route path="products" element={<ComingSoon title="Products" phase="Phase 10" />} />
+        <Route path="products" element={<SellerProducts />} />
+        <Route path="products/new" element={<SellerProductForm />} />
+        <Route path="products/:id/edit" element={<SellerProductForm />} />
         <Route path="inventory" element={<ComingSoon title="Inventory" phase="Phase 11" />} />
         <Route path="orders" element={<ComingSoon title="Orders" phase="Phase 20" />} />
         <Route path="customers" element={<ComingSoon title="Customers" phase="Phase 20" />} />

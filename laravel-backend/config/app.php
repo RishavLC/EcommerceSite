@@ -39,5 +39,6 @@ return [
     |--------------------------------------------------------------------------
     */
     'platform_commission_percent' => (float) env('PLATFORM_COMMISSION_PERCENT', 10),
+    'product_moderation_enabled' => filter_var(env('PRODUCT_MODERATION_ENABLED', true), FILTER_VALIDATE_BOOLEAN),
 
 ];

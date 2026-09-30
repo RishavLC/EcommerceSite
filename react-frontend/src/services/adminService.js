@@ -78,3 +78,29 @@ export async function activateSeller(id) {
   const { data } = await api.post(`/api/v1/admin/sellers/${id}/activate`)
   return data.data
 }
+
+// ---- Products (Phase 10) ----
+export async function fetchAdminProducts(params) {
+  const { data } = await api.get('/api/v1/admin/products', { params })
+  return data
+}
+
+export async function fetchAdminProduct(id) {
+  const { data } = await api.get(`/api/v1/admin/products/${id}`)
+  return data.data
+}
+
+export async function approveProduct(id) {
+  const { data } = await api.post(`/api/v1/admin/products/${id}/approve`)
+  return data.data
+}
+
+export async function rejectProduct(id, reason) {
+  const { data } = await api.post(`/api/v1/admin/products/${id}/reject`, { rejection_reason: reason })
+  return data.data
+}
+
+export async function toggleProductActive(id) {
+  const { data } = await api.post(`/api/v1/admin/products/${id}/toggle-active`)
+  return data.data
+}

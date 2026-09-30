@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\Admin\BrandController;
 use App\Http\Controllers\Api\Admin\CategoryController;
 use App\Http\Controllers\Api\Admin\DashboardController;
+use App\Http\Controllers\Api\Admin\ProductController;
 use App\Http\Controllers\Api\Admin\RoleController;
 use App\Http\Controllers\Api\Admin\SellerController;
 use App\Http\Controllers\Api\Admin\SubcategoryController;
@@ -65,3 +66,10 @@ Route::get('/brands/{brand}', [BrandController::class, 'show']);
 Route::put('/brands/{brand}', [BrandController::class, 'update']);
 Route::delete('/brands/{brand}', [BrandController::class, 'destroy']);
 Route::post('/brands/{brand}/toggle-active', [BrandController::class, 'toggleActive']);
+
+// Products (Phase 10)
+Route::get('/products', [ProductController::class, 'index']);
+Route::get('/products/{product}', [ProductController::class, 'show']);
+Route::post('/products/{product}/approve', [ProductController::class, 'approve']);
+Route::post('/products/{product}/reject', [ProductController::class, 'reject']);
+Route::post('/products/{product}/toggle-active', [ProductController::class, 'toggleActive']);

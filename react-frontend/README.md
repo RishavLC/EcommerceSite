@@ -82,6 +82,16 @@ searchable/filterable table with Edit, Activate/Deactivate, and Delete,
 plus a shared create/edit form page. Image/logo fields are plain URL text
 inputs for now; real file upload comes with Phase 10's product images.
 
+## Phase 10 — Product Management
+
+`/seller/products` (list, searchable/filterable by status) and a shared
+`/seller/products/new` \/ `/seller/products/:id/edit` form covering core
+fields, image upload (multiple files), and dynamic variant rows
+(SKU/size/color/stock) and spec-attribute rows (name/value), each with
+add/remove buttons. `/admin/products` mirrors it read-only plus
+approve/reject/toggle-active, matching the Sellers page pattern from
+Phase 7.
+
 ## Common errors & fixes
 
 | Error | Fix |
