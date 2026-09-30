@@ -92,6 +92,14 @@ add/remove buttons. `/admin/products` mirrors it read-only plus
 approve/reject/toggle-active, matching the Sellers page pattern from
 Phase 7.
 
+## Phase 11 — Inventory
+
+`/seller/inventory` (table with a status badge: OK / Low stock / Out of
+stock, filterable) and `/seller/inventory/:id` (stock numbers, a restock
+form, a manual-adjustment form with a required reason, a per-variant
+selector when the product has variants, and a full stock-movement history
+table).
+
 ## Common errors & fixes
 
 | Error | Fix |

@@ -11,16 +11,41 @@ class Product extends Model
 {
     use SoftDeletes;
 
+    public const LOW_STOCK_THRESHOLD = 10;
+
     protected $fillable = [
         'seller_id', 'category_id', 'subcategory_id', 'brand_id',
         'name', 'slug', 'sku', 'description', 'price', 'discount_price',
-        'stock', 'weight', 'dimensions', 'status', 'rejection_reason',
+        'stock', 'reserved_stock', 'sold_stock', 'weight', 'dimensions',
+        'status', 'rejection_reason',
     ];
+
+    protected $appends = ['available_stock', 'is_low_stock', 'is_out_of_stock'];
 
     protected $casts = [
         'price' => 'decimal:2',
         'discount_price' => 'decimal:2',
     ];
+
+    public function getAvailableStockAttribute(): int
+    {
+        return max(0, $this->stock - $this->reserved_stock);
+    }
+
+    public function getIsLowStockAttribute(): bool
+    {
+        return $this->available_stock > 0 && $this->available_stock <= self::LOW_STOCK_THRESHOLD;
+    }
+
+    public function getIsOutOfStockAttribute(): bool
+    {
+        return $this->available_stock <= 0;
+    }
+
+    public function stockHistories(): HasMany
+    {
+        return $this->hasMany(StockHistory::class);
+    }
 
     public function seller(): BelongsTo
     {

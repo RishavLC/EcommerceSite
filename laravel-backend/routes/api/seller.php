@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\Seller\DashboardController;
+use App\Http\Controllers\Api\Seller\InventoryController;
 use App\Http\Controllers\Api\Seller\ProductController;
 use App\Http\Controllers\Api\Seller\StoreProfileController;
 use Illuminate\Support\Facades\Route;
@@ -29,3 +30,9 @@ Route::put('/products/{product}', [ProductController::class, 'update']);
 Route::delete('/products/{product}', [ProductController::class, 'destroy']);
 Route::post('/products/{product}/images', [ProductController::class, 'addImage']);
 Route::delete('/products/{product}/images/{image}', [ProductController::class, 'deleteImage']);
+
+// Inventory (Phase 11)
+Route::get('/inventory', [InventoryController::class, 'index']);
+Route::post('/inventory/{product}/restock', [InventoryController::class, 'restock']);
+Route::post('/inventory/{product}/adjust', [InventoryController::class, 'adjust']);
+Route::get('/inventory/{product}/history', [InventoryController::class, 'history']);

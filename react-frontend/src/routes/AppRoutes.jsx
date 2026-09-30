@@ -28,6 +28,8 @@ import SellerDashboard from '../pages/seller/Dashboard'
 import SellerStoreProfile from '../pages/seller/StoreProfile'
 import SellerProducts from '../pages/seller/Products'
 import SellerProductForm from '../pages/seller/ProductForm'
+import SellerInventory from '../pages/seller/Inventory'
+import SellerInventoryDetail from '../pages/seller/InventoryDetail'
 
 export default function AppRoutes() {
   return (
@@ -100,7 +102,8 @@ export default function AppRoutes() {
         <Route path="products" element={<SellerProducts />} />
         <Route path="products/new" element={<SellerProductForm />} />
         <Route path="products/:id/edit" element={<SellerProductForm />} />
-        <Route path="inventory" element={<ComingSoon title="Inventory" phase="Phase 11" />} />
+        <Route path="inventory" element={<SellerInventory />} />
+        <Route path="inventory/:id" element={<SellerInventoryDetail />} />
         <Route path="orders" element={<ComingSoon title="Orders" phase="Phase 20" />} />
         <Route path="customers" element={<ComingSoon title="Customers" phase="Phase 20" />} />
         <Route path="reviews" element={<ComingSoon title="Reviews" phase="Phase 23" />} />

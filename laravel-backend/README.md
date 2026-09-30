@@ -341,7 +341,40 @@ curl -X POST http://127.0.0.1:8000/api/v1/seller/products -b seller_cookies.txt 
   -F "images[]=@/path/to/photo.jpg"
 ```
 
-## What's next (Phase 11)
+## Phase 11 — Inventory
 
-- Inventory: stock history, reserved/sold quantities, low-stock alerts,
-  automatic stock adjustment on order/cancel/return/refund
+New: `reserved_stock` and `sold_stock` columns on both `products` and
+`product_variants` (alongside the existing `stock`), and a `stock_histories`
+audit-log table. `Product`/`ProductVariant` gained computed, auto-appended
+`available_stock` (`stock - reserved_stock`), `is_low_stock`, and
+`is_out_of_stock` attributes - `Product::LOW_STOCK_THRESHOLD` (10) is now
+the one place that number lives; Phase 8's seller dashboard was updated to
+read from it instead of its own copy, so the two can't drift apart.
+
+**`app/Services/InventoryService.php`** is the one place that ever changes
+these columns. This phase only exposes two of its six methods over HTTP -
+`restock` (seller adds stock) and `adjust` (signed manual correction,
+reason required) - both logged to `stock_histories` with the acting user.
+The other four - `reserve`, `release`, `fulfill`, `returnStock` - exist now
+but are unused until Phase 19 (checkout), Phase 20 (order cancellation),
+and Phase 25 (returns/refunds) call them; building the engine once here
+means those phases wire up calls to already-tested methods instead of
+inventing stock math under deadline. Every method guards against stock
+going negative and throws a `ValidationException` if it would.
+
+Endpoints (all `/api/v1/seller/inventory`, ownership enforced via the
+Phase 10 `ProductPolicy`): `GET /` (list with `status=low_stock` or
+`out_of_stock` filters), `POST /{product}/restock`, `POST /{product}/adjust`,
+`GET /{product}/history`. All four accept an optional `variant_id` to
+target a specific variant instead of the product as a whole.
+
+```bash
+curl -X POST http://127.0.0.1:8000/api/v1/seller/inventory/1/restock -b seller_cookies.txt \
+  -H "Content-Type: application/json" -H "Accept: application/json" \
+  -d '{"quantity": 20, "note": "New shipment arrived"}'
+```
+
+## What's next (Phase 12)
+
+- Customer storefront: homepage with navbar, search, categories, hero
+  banners, featured/new/popular/discounted products, featured sellers

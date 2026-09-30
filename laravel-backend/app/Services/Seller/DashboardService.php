@@ -9,8 +9,6 @@ use App\Models\SellerPayout;
 
 class DashboardService
 {
-    protected const LOW_STOCK_THRESHOLD = 10;
-
     public function stats(int $sellerId): array
     {
         $items = OrderItem::where('seller_id', $sellerId);
@@ -23,7 +21,8 @@ class DashboardService
             'pending_orders' => (clone $items)->where('status', 'pending')->count(),
             'completed_orders' => (clone $items)->where('status', 'delivered')->count(),
             'low_stock_products' => Product::where('seller_id', $sellerId)
-                ->where('stock', '<=', self::LOW_STOCK_THRESHOLD)
+                ->whereRaw('(stock - reserved_stock) <= ?', [Product::LOW_STOCK_THRESHOLD])
+                ->whereRaw('(stock - reserved_stock) > 0')
                 ->count(),
             'average_rating' => round((float) Review::whereHas('product', fn ($q) => $q->where('seller_id', $sellerId))
                 ->avg('rating'), 1),
